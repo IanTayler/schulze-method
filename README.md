@@ -1,5 +1,4 @@
-schulze-method [![Build status][Build image]][Build] [![Updates][Dependency image]][PyUp] [![Python 3][Python3 image]][PyUp] [![Code coverage][Codecov image]][Codecov]
-==============
+# Schulze Method [![Build status][Build image]][Build] [![Updates][Dependency image]][PyUp] [![Python 3][Python3 image]][PyUp] [![Code coverage][Codecov image]][Codecov]
 
   [Build]: https://travis-ci.org/woctezuma/schulze-method
   [Build image]: https://travis-ci.org/woctezuma/schulze-method.svg?branch=travis
@@ -11,9 +10,37 @@ schulze-method [![Build status][Build image]][Build] [![Updates][Dependency imag
   [Codecov]: https://codecov.io/gh/woctezuma/schulze-method
   [Codecov image]: https://codecov.io/gh/woctezuma/schulze-method/branch/travis/graph/badge.svg
 
-A Python implementation of the [Schulze method](http://en.wikipedia.org/wiki/Schulze_method).
+This repository provides a Python implementation of the [Schulze method](http://en.wikipedia.org/wiki/Schulze_method).
 
-To rank candidates, call the `compute_ranks` method of the `schulze` module. This method has the following signature and Pydoc:
+## Requirements
+
+- Install the latest version of [Python 3.X](https://www.python.org/downloads/).
+
+- Install the required packages:
+
+```
+pip install -r requirements.txt
+```
+
+## Usage
+
+- To rank candidates, import and call the `compute_ranks()` function, with [given signature](schulze.py#L88).
+
+```python
+from schulze import compute_ranks
+
+# Input parameters:
+#
+# candidate_names: a list which contains all the candidate names.
+#
+# weighted_ranking_orders: a list of pairs (ranking_order, weight), where:
+# - ranking_order is a list of list, e.g. [[a, b], [c], [d, e]] represents a = b > c > d = e.
+# - weight is a number, typically the number of voters who choose this ranking order.
+#
+
+schulze_ranking = compute_ranks(candidate_names, weighted_ranks)
+```
+This method has .
 
 ```python
 def compute_ranks(candidate_names, weighted_ranks):
@@ -31,15 +58,3 @@ def compute_ranks(candidate_names, weighted_ranks):
     this ranking.
     """
 ```
-
-For example usage, refer to the `schulze_test` module. From the command line, you can run these tests like so:
-
-```text
-$ python -m unittest schulze_test
-.....
-----------------------------------------------------------------------
-Ran 5 tests in 0.002s
-
-OK
-```
-
