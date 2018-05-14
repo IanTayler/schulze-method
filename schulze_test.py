@@ -111,3 +111,5 @@ class SchulzeTest(unittest.TestCase):
         expected_best = [['a', 'b', 'c', 'd', 'e']]
         self.assertSequenceEqual(expected_best, best)
 
+if __name__ == '__main__':
+    unittest.main()
