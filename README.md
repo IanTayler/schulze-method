@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-- To rank candidates, import and call the `compute_ranks()` function, with [given signature](schulze.py#L86).
+To rank candidates, import and call the `compute_ranks()` function, with [given signature](schulze.py#L86).
 
 ```python
 from schulze import compute_ranks
