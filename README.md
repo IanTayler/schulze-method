@@ -29,14 +29,5 @@ pip install -r requirements.txt
 ```python
 from schulze import compute_ranks
 
-# Input parameters:
-#
-# candidate_names: a list which contains all the candidate names.
-#
-# weighted_ranking_orders: a list of pairs (ranking_order, weight), where:
-# - ranking_order is a list of list, e.g. [[a, b], [c], [d, e]] represents a = b > c > d = e.
-# - weight is a number, typically the number of voters who choose this ranking order.
-#
-
 schulze_ranking = compute_ranks(candidate_names, weighted_ranking_orders)
 ```
