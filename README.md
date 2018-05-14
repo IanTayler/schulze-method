@@ -40,21 +40,3 @@ from schulze import compute_ranks
 
 schulze_ranking = compute_ranks(candidate_names, weighted_ranks)
 ```
-This method has .
-
-```python
-def compute_ranks(candidate_names, weighted_ranks):
-    """Returns the candidates ranked by the Schulze method.
-
-    Parameter candidate_names is a sequence containing all the candidate names.
-
-    Parameter weighted_ranks is a sequence of (ranks, weight) pairs.
-
-    The first element, ranks, is a ranking of the candidates. It is an array of
-    arrays so that we can express ties. For example, [[a, b], [c], [d, e]]
-    represents a = b > c > d = e.
-
-    The second element, weight, is typically the number of voters that chose
-    this ranking.
-    """
-```
