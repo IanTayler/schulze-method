@@ -38,5 +38,5 @@ from schulze import compute_ranks
 # - weight is a number, typically the number of voters who choose this ranking order.
 #
 
-schulze_ranking = compute_ranks(candidate_names, weighted_ranks)
+schulze_ranking = compute_ranks(candidate_names, weighted_ranking_orders)
 ```
