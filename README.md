@@ -2,14 +2,14 @@ schulze-method [![Build status][Build image]][Build] [![Updates][Dependency imag
 ==============
 
   [Build]: https://travis-ci.org/woctezuma/schulze-method
-  [Build image]: https://travis-ci.org/woctezuma/schulze-method.svg?branch=master
+  [Build image]: https://travis-ci.org/woctezuma/schulze-method.svg?branch=travis
 
   [PyUp]: https://pyup.io/repos/github/woctezuma/schulze-method/
   [Dependency image]: https://pyup.io/repos/github/woctezuma/schulze-method/shield.svg
   [Python3 image]: https://pyup.io/repos/github/woctezuma/schulze-method/python-3-shield.svg
 
   [Codecov]: https://codecov.io/gh/woctezuma/schulze-method
-  [Codecov image]: https://codecov.io/gh/woctezuma/schulze-method/branch/master/graph/badge.svg
+  [Codecov image]: https://codecov.io/gh/woctezuma/schulze-method/branch/travis/graph/badge.svg
 
 A Python implementation of the [Schulze method](http://en.wikipedia.org/wiki/Schulze_method).
 
