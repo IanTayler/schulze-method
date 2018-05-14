@@ -83,18 +83,17 @@ def _rank_p(candidate_names, p):
     return [candidate_wins[num_wins] for num_wins in sorted_wins]
 
 
-def compute_ranks(candidate_names, weighted_ranks):
-    """Returns the candidates ranked by the Schulze method.
+def compute_ranks(candidate_names, weighted_ranking_orders):
+    """Returns the Schulze ranking of candidates.
 
     See http://en.wikipedia.org/wiki/Schulze_method for details.
 
-    Parameter candidate_names is a sequence containing all the candidate names.
+    Parameter candidate_names is a list which contains all the candidate names.
 
-    Parameter weighted_ranks is a sequence of (ranks, weight) pairs.
-    The first element, ranks, is a ranking of the candidates. It is an array of arrays so that we
-    can express ties. For example, [[a, b], [c], [d, e]] represents a = b > c > d = e.
-    The second element, weight, is typically the number of voters that chose this ranking.
+    Parameter weighted_ranking_orders is a list of pairs (ranking_order, weight), where:
+    - ranking_order is a list of lists, which allows ties, e.g. [[a, b], [c], [d, e]] represents a = b > c > d = e.
+    - weight is a numerical value, typically the number of voters who choose this ranking order.
     """
-    d = _compute_d(weighted_ranks)
+    d = _compute_d(weighted_ranking_orders)
     p = _compute_p(d, candidate_names)
     return _rank_p(candidate_names, p)
