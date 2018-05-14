@@ -3,16 +3,15 @@
 __author__ = "Michael G. Parker"
 __contact__ = "http://omgitsmgp.com/"
 
-
-from collections import defaultdict
-import itertools
 import unittest
+from collections import defaultdict
 
 import schulze
 
 
 class SchulzeTest(unittest.TestCase):
-    def _make_ranks(self, names):
+    @staticmethod
+    def _make_ranks(names):
         return [[name] for name in names]
 
     def _assert_row(self, matrix, name, expected_values):
@@ -20,8 +19,8 @@ class SchulzeTest(unittest.TestCase):
         for other_name, expected_value in zip(other_names, expected_values):
             actual_value = matrix.get((name, other_name), 0)
             self.assertEqual(expected_value, actual_value,
-                    'matrix(%s, %s)=%s, expected %s' %
-                        (name, other_name, actual_value, expected_value))
+                             'matrix(%s, %s)=%s, expected %s' %
+                             (name, other_name, actual_value, expected_value))
 
     def _compute_d_wikipedia(self):
         """Computes the d array found at http://en.wikipedia.org/wiki/Schulze_method."""
@@ -110,6 +109,7 @@ class SchulzeTest(unittest.TestCase):
 
         expected_best = [['a', 'b', 'c', 'd', 'e']]
         self.assertSequenceEqual(expected_best, best)
+
 
 if __name__ == '__main__':
     unittest.main()
