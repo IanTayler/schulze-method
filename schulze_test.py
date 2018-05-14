@@ -110,6 +110,24 @@ class SchulzeTest(unittest.TestCase):
         expected_best = [['a', 'b', 'c', 'd', 'e']]
         self.assertSequenceEqual(expected_best, best)
 
+    def test_compute_schulze_ranking(self):
+        # Copied from test_rank_p_wikipedia()
+
+        d = self._compute_d_wikipedia()
+        candidate_names = 'abcde'
+        p = schulze._compute_p(d, candidate_names)
+
+        ballots = []
+        for ballot in p:
+            weight = p[ballot]
+            new_ballots = [ballot for _ in range(weight)]
+            ballots.extend(new_ballots)
+
+        best = schulze.compute_schulze_ranking(candidate_names, ballots)
+
+        expected_best = schulze._rank_p(candidate_names, p)
+        self.assertSequenceEqual(expected_best, best)
+
 
 if __name__ == '__main__':
     unittest.main()

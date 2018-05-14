@@ -92,8 +92,20 @@ def compute_ranks(candidate_names, weighted_ranking_orders):
 
     Parameter weighted_ranking_orders is a list of pairs (ranking_order, weight), where:
     - ranking_order is a list of lists, which allows ties, e.g. [[a, b], [c], [d, e]] represents a = b > c > d = e.
-    - weight is a numerical value, typically the number of voters who choose this ranking order.
+    - weight is a numerical value, typically the number of voters who choose this ranking_order.
     """
     d = _compute_d(weighted_ranking_orders)
     p = _compute_p(d, candidate_names)
     return _rank_p(candidate_names, p)
+
+
+def compute_schulze_ranking(candidate_names, ballots):
+    """Returns the Schulze ranking of candidates, in the case where each ballot is given equal weight.
+
+    Parameter candidate_names is a list which contains all the candidate names.
+
+    Parameter ballots is a list of ballots, where each ballot is actually a ranking order expressed as a list of lists,
+    e.g. [[a, b], [c], [d, e]] represents a = b > c > d = e.
+    """
+    weighted_ranking_orders = [(ballot, 1) for ballot in ballots]
+    return compute_ranks(candidate_names, weighted_ranking_orders)
