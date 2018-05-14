@@ -3,8 +3,12 @@
 For more information read http://en.wikipedia.org/wiki/Schulze_method.
 """
 
+# Original author
 __author__ = "Michael G. Parker"
 __contact__ = "http://omgitsmgp.com/"
+# Fork creator
+__author__ = "Woctezuma"
+__contact__ = "https://github.com/woctezuma/"
 
 from collections import defaultdict
 

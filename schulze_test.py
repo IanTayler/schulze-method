@@ -1,7 +1,11 @@
 """Tests for the schulze module."""
 
+# Original author
 __author__ = "Michael G. Parker"
 __contact__ = "http://omgitsmgp.com/"
+# Fork creator
+__author__ = "Woctezuma"
+__contact__ = "https://github.com/woctezuma/"
 
 import unittest
 from collections import defaultdict
