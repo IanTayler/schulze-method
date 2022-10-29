@@ -1,14 +1,4 @@
-# Schulze Method [![Build status][Build image]][Build] [![Updates][Dependency image]][PyUp] [![Python 3][Python3 image]][PyUp] [![Code coverage][Codecov image]][Codecov]
-
-  [Build]: https://travis-ci.org/woctezuma/schulze-method
-  [Build image]: https://travis-ci.org/woctezuma/schulze-method.svg?branch=master
-
-  [PyUp]: https://pyup.io/repos/github/woctezuma/schulze-method/
-  [Dependency image]: https://pyup.io/repos/github/woctezuma/schulze-method/shield.svg
-  [Python3 image]: https://pyup.io/repos/github/woctezuma/schulze-method/python-3-shield.svg
-
-  [Codecov]: https://codecov.io/gh/woctezuma/schulze-method
-  [Codecov image]: https://codecov.io/gh/woctezuma/schulze-method/branch/master/graph/badge.svg
+# Schulze Method [![Build status with Github Action][build-image-action]][build-action] [![Updates][dependency-image]][pyup] [![Python 3][python3-image]][pyup] [![Code coverage][codecov-image]][codecov] [![Code quality][codacy-image]][codacy]
 
 This repository provides a Python implementation of the [Schulze method](http://en.wikipedia.org/wiki/Schulze_method).
 
@@ -42,3 +32,17 @@ from schulze import compute_schulze_ranking
 schulze_ranking = compute_schulze_ranking(candidate_names, ballots)
 ```
 
+<!-- Definitions -->
+
+[build-action]: <https://github.com/woctezuma/schulze-method/actions>
+[build-image-action]: <https://github.com/woctezuma/schulze-method/workflows/Python application/badge.svg?branch=master>
+
+[pyup]: <https://pyup.io/repos/github/woctezuma/schulze-method/>
+[dependency-image]: <https://pyup.io/repos/github/woctezuma/schulze-method/shield.svg>
+[python3-image]: <https://pyup.io/repos/github/woctezuma/schulze-method/python-3-shield.svg>
+
+[codecov]: <https://codecov.io/gh/woctezuma/schulze-method>
+[codecov-image]: <https://codecov.io/gh/woctezuma/schulze-method/branch/master/graph/badge.svg>
+
+[codacy]: <https://www.codacy.com/gh/woctezuma/schulze-method>
+[codacy-image]: <https://api.codacy.com/project/badge/Grade/de8556d4681042c7ace2a1b95682be6b>
