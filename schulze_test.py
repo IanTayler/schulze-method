@@ -121,8 +121,7 @@ class SchulzeTest(unittest.TestCase):
         p = schulze._compute_p(d, candidate_names)
 
         ballots = []
-        for ballot in p:
-            weight = p[ballot]
+        for ballot, weight in p.items():
             new_ballots = [ballot for _ in range(weight)]
             ballots.extend(new_ballots)
 
