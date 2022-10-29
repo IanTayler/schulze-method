@@ -54,7 +54,7 @@ def _compute_p(d, candidate_names):
         for candidate_name2 in candidate_names:
             if candidate_name1 != candidate_name2:
                 for candidate_name3 in candidate_names:
-                    if (candidate_name1 != candidate_name3) and (candidate_name2 != candidate_name3):
+                    if candidate_name3 not in (candidate_name1, candidate_name2):
                         curr_value = p.get((candidate_name2, candidate_name3), 0)
                         new_value = min(
                             p.get((candidate_name2, candidate_name1), 0),
