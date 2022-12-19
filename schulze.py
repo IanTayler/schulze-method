@@ -87,7 +87,7 @@ def _rank_p(candidate_names, p):
     return [candidate_wins[num_wins] for num_wins in sorted_wins]
 
 
-def compute_ranks(candidate_names, weighted_ranking_orders):
+def compute_ranks(candidate_names, weighted_ranking_orders, untie_first=False):
     """Returns the Schulze ranking of candidates.
 
     See http://en.wikipedia.org/wiki/Schulze_method for details.
@@ -97,19 +97,38 @@ def compute_ranks(candidate_names, weighted_ranking_orders):
     Parameter weighted_ranking_orders is a list of pairs (ranking_order, weight), where:
     - ranking_order is a list of lists, which allows ties, e.g. [[a, b], [c], [d, e]] represents a = b > c > d = e.
     - weight is a numerical value, typically the number of voters who choose this ranking_order.
+
+    Parameter untie_first decides whether to run a tie-breaking iterative algorithm in
+    case there is a tie.
     """
     d = _compute_d(weighted_ranking_orders)
     p = _compute_p(d, candidate_names)
-    return _rank_p(candidate_names, p)
+    rank = _rank_p(candidate_names, p)
+    while untie_first and len(rank[0]) != 1:
+        winners = rank[0]
+        winners_d = {
+            pair: diff
+            for pair, diff in d.items()
+            if pair[0] in winners and pair[1] in winners
+        }
+        winners_p = _compute_p(winners_d, winners)
+        winners_rank = _rank_p(winners, winners_p)
+        rank = winners_rank + rank[1:]
+    return rank
 
 
-def compute_schulze_ranking(candidate_names, ballots):
+def compute_schulze_ranking(candidate_names, ballots, untie_first=False):
     """Returns the Schulze ranking of candidates, in the case where each ballot is given equal weight.
 
     Parameter candidate_names is a list which contains all the candidate names.
 
     Parameter ballots is a list of ballots, where each ballot is actually a ranking order expressed as a list of lists,
     e.g. [[a, b], [c], [d, e]] represents a = b > c > d = e.
+
+    Parameter untie_first decides whether to follow a procedure to break ties in case
+    the first place is tied.
     """
     weighted_ranking_orders = [(ballot, 1) for ballot in ballots]
-    return compute_ranks(candidate_names, weighted_ranking_orders)
+    return compute_ranks(
+        candidate_names, weighted_ranking_orders, untie_first=untie_first
+    )
