@@ -13,24 +13,39 @@ EQUALS = "[blue]=[/blue]"
 
 def compute_from_df(df):
     entries = []
-    for idx, line in df.iterrows():
+    candidates = set()
+
+    for _, line in df.iterrows():
         entry = []
         for movie in line[2:]:
+            if movie:
+                candidates.add(movie)
             entry.append([movie])
+
         entries.append(entry)
 
-    candidates = df.iloc[0, 2:]
-    rankings = compute_schulze_ranking(candidates, entries)
+    candidates = list(candidates)
+    rankings = compute_schulze_ranking(candidates, entries, untie_first=True)
     return candidates, rankings
 
 
-def head_to_head(df):
+def head_to_head(df, candidates):
     scores = defaultdict(int)
     for _, row in df.iterrows():
         for i, winning_entry in enumerate(row[2:]):
             for losing_entry in row[3 + i :]:
+                if not losing_entry:
+                    break
                 scores[(winning_entry, losing_entry)] += 1
                 scores[(losing_entry, winning_entry)] -= 1
+
+        seen_candidates = [entry for entry in row[2:] if entry]
+
+        for potential_loser_entry in candidates:
+            if potential_loser_entry not in seen_candidates:
+                scores[(winning_entry, potential_loser_entry)] += 1
+                scores[(potential_loser_entry, winning_entry)] -= 1
+
     return scores
 
 
@@ -40,6 +55,7 @@ def cli(csv_path):
     console = Console()
 
     df = pd.read_csv(csv_path)
+    df = df.fillna("")
     candidates, rankings = compute_from_df(df)
 
     table = Table(title="[bold yellow]Head-to-head[/bold yellow]", show_lines=True)
@@ -47,7 +63,7 @@ def cli(csv_path):
     for candidate in candidates:
         table.add_column(candidate)
 
-    scores = head_to_head(df)
+    scores = head_to_head(df, candidates)
     for row_candidate in candidates:
         row_values = []
         for column_candidate in candidates:
