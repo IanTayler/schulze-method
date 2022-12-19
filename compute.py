@@ -24,7 +24,17 @@ def compute_from_df(df, untie_first=False):
 
         entries.append(entry)
 
+    for entry in entries:
+        entry_candidates = set()
+        for entry_rank in entry:
+            entry_candidates.update(entry_rank)
+
+        entry.append(
+            [candidate for candidate in candidates if candidate not in entry_candidates]
+        )
+
     candidates = list(candidates)
+
     rankings = compute_schulze_ranking(candidates, entries, untie_first=untie_first)
     return candidates, rankings
 
