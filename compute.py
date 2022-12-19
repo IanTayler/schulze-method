@@ -11,7 +11,7 @@ CROSS = "[red]:cross_mark:[/red]"
 EQUALS = "[blue]=[/blue]"
 
 
-def compute_from_df(df):
+def compute_from_df(df, untie_first=False):
     entries = []
     candidates = set()
 
@@ -25,7 +25,7 @@ def compute_from_df(df):
         entries.append(entry)
 
     candidates = list(candidates)
-    rankings = compute_schulze_ranking(candidates, entries, untie_first=True)
+    rankings = compute_schulze_ranking(candidates, entries, untie_first=untie_first)
     return candidates, rankings
 
 
@@ -56,7 +56,7 @@ def cli(csv_path):
 
     df = pd.read_csv(csv_path)
     df = df.fillna("")
-    candidates, rankings = compute_from_df(df)
+    candidates, rankings = compute_from_df(df, untie_first=True)
 
     table = Table(title="[bold yellow]Head-to-head[/bold yellow]", show_lines=True)
     table.add_column("")
@@ -91,10 +91,22 @@ def cli(csv_path):
         if all(scores[(winner, other)] > 0 for other in candidates if winner != other):
             console.print(f"[blue]{winner}[/blue] is a Condorcet winner!")
         else:
-            console.print(
-                f"There is no Condorcet winner! [blue]{winner}[/blue] wins thanks to "
-                f"having the strongest transitive beatpaths."
-            )
+            _, tied_rankings = compute_from_df(df, untie_first=False)
+            if len(tied_rankings[0]) > 1:
+                ties = tied_rankings[0]
+                ties_text = ", ".join(f"[blue]{tied}[/blue]" for tied in ties)
+
+                console.print(
+                    f"There is no Condorcet winner, and there is no Schulze winner! "
+                    f"[blue]{winner}[/blue] wins thanks to being in the set of "
+                    f"strongest transitive beatpaths and winning a local tie-break. "
+                    f"{ties_text} were tied in the full head-to-head table."
+                )
+            else:
+                console.print(
+                    f"There is no Condorcet winner! [blue]{winner}[/blue] wins thanks to "
+                    f"having the strongest transitive beatpaths."
+                )
 
 
 if __name__ == "__main__":
