@@ -42,6 +42,7 @@ def compute_from_df(df, untie_first=False):
 def head_to_head(df, candidates):
     scores = defaultdict(int)
     for _, row in df.iterrows():
+        seen_candidates = {entry for entry in row[2:] if entry}
         for i, winning_entry in enumerate(row[2:]):
             for losing_entry in row[3 + i :]:
                 if not losing_entry:
@@ -49,12 +50,10 @@ def head_to_head(df, candidates):
                 scores[(winning_entry, losing_entry)] += 1
                 scores[(losing_entry, winning_entry)] -= 1
 
-        seen_candidates = [entry for entry in row[2:] if entry]
-
-        for potential_loser_entry in candidates:
-            if potential_loser_entry not in seen_candidates:
-                scores[(winning_entry, potential_loser_entry)] += 1
-                scores[(potential_loser_entry, winning_entry)] -= 1
+            for potential_loser_entry in candidates:
+                if potential_loser_entry not in seen_candidates:
+                    scores[(winning_entry, potential_loser_entry)] += 1
+                    scores[(potential_loser_entry, winning_entry)] -= 1
 
     return scores
 
