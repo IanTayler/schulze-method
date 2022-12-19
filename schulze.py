@@ -105,8 +105,18 @@ def compute_ranks(candidate_names, weighted_ranking_orders, untie_first=False):
     d = _compute_d(weighted_ranking_orders)
     p = _compute_p(d, candidate_names)
     rank = _rank_p(candidate_names, p)
+
+    last_untie_size = len(candidate_names)
+    # If there is a tie and untie_first is set, take the set of winners and only
+    # consider those movies for ranking them among each other.
     while untie_first and len(rank[0]) != 1:
         winners = rank[0]
+        if last_untie_size == len(winners):
+            # Our current method got stuck in a loop. There is no winner according
+            # to our definition.
+            return rank
+        last_untie_size = len(winners)
+
         winners_d = {
             pair: diff
             for pair, diff in d.items()
@@ -114,6 +124,7 @@ def compute_ranks(candidate_names, weighted_ranking_orders, untie_first=False):
         }
         winners_p = _compute_p(winners_d, winners)
         winners_rank = _rank_p(winners, winners_p)
+
         rank = winners_rank + rank[1:]
     return rank
 
