@@ -11,13 +11,17 @@ CROSS = "[red]:cross_mark:[/red]"
 EQUALS = "[blue]=[/blue]"
 
 
+def get_row_candidates(row):
+    return row.drop(["Email Address", "Timestamp"], errors="ignore")
+
+
 def compute_from_df(df, untie_first=False):
     entries = []
     candidates = set()
 
     for _, line in df.iterrows():
         entry = []
-        for movie in line[2:]:
+        for movie in get_row_candidates(line):
             if movie:
                 candidates.add(movie)
             entry.append([movie])
@@ -42,9 +46,10 @@ def compute_from_df(df, untie_first=False):
 def head_to_head(df, candidates):
     scores = defaultdict(int)
     for _, row in df.iterrows():
-        seen_candidates = {entry for entry in row[2:] if entry}
-        for i, winning_entry in enumerate(row[2:]):
-            for losing_entry in row[3 + i :]:
+        row_candidates = get_row_candidates(row)
+        seen_candidates = {entry for entry in row_candidates if entry}
+        for i, winning_entry in enumerate(row_candidates):
+            for losing_entry in row_candidates[1 + i :]:
                 if not losing_entry:
                     break
                 scores[(winning_entry, losing_entry)] += 1
